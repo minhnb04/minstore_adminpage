@@ -1,0 +1,33 @@
+<div class="row min-vh-100">
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header pb-0 d-flex justify-content-between">
+                <h6>Users table</h6>
+                <a class="btn btn-link text-success px-3 mb-0" onclick="show_form_add_user()" href="javascript:;"><i class="fas fa-plus text-success me-2" aria-hidden="true"></i>Add</a>
+            </div>
+            <div class="card-body px-0 pt-0 pb-2">
+                <div class="table-responsive p-0">
+                    <table class="table align-items-center mb-0">
+                        <thead>
+                        <tr>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Stt</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">User</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Role</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Birdthday</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                            <% users.forEach(function(user){ %>
+                                <%- include('users-item', {user: user}); %>
+                              <% }); %>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

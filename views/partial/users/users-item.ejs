@@ -1,0 +1,51 @@
+<tr>
+    <td class="align-middle text-center">
+        <p class="text-xs font-weight-bold mb-0">1</p>
+    </td>
+    <td>
+        <div class="d-flex px-2 py-1">
+            <div>
+                <img src="<%= user.avatarImage %>" class="avatar avatar-sm me-3" alt="user1">
+            </div>
+            <div class="d-flex flex-column justify-content-center">
+                <h6 class="mb-0 text-sm"><%= user.fullname %></h6>
+                <p class="text-xs text-secondary mb-0"><%= user.phoneNumber %> / <%= user.email %></p>
+            </div>
+        </div>
+    </td>
+    <td>
+        <p class="text-xs font-weight-bold mb-0">
+            <% if(user.role==1){ %>
+            <%= 'Manager'  %>
+            <% }else{ %>
+            <%= 'Staff' %>
+            <% } %>
+        </p>
+        <p class="text-xs text-secondary mb-0"><%= user.employeeCode %></p>
+    </td>
+            <% if(user.status == true){ %>
+                <td class="align-middle text-center text-sm">
+                    <span class="badge badge-sm bg-gradient-success">Active</span>
+                </td>
+            <% }else{ %>
+                <td class="align-middle text-center text-sm">
+                    <span class="badge badge-sm bg-gradient-secondary">Disable</span>
+                </td>
+            <% } %>
+
+    <td class="align-middle text-center">
+        <span id="userBirthday" class="text-secondary text-xs font-weight-bold mw-25">
+            <% var txt_date = String(user.birthday).slice(8,18)%>
+            <%= txt_date.slice(0,2) +'/0'+ (Number(txt_date.slice(9,10))-1) +'/'+ txt_date.slice(3,8) %>
+        </span>
+    </td>
+    <td class="align-middle text-center">
+        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+            Edit
+        </a>
+        &#160
+        <a href="javascript:;" class="text-secondary font-weight-bold text-xs text-danger" data-toggle="tooltip" data-original-title="Edit user">
+            Delete
+        </a>
+    </td>
+</tr>
