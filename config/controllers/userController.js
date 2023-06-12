@@ -7,8 +7,26 @@ class UserController {
 
         User.find()
             .then((users) => {
-                console.log(users);
-                res.render('users', { title: 'User Management', users })
+                var lsUser = users.map(function(user){
+                    var date = user.birthday.toISOString()
+                    var date = date.slice(8,10) +'/'+ date.slice(5,7) +'/'+ date.slice(0,4)
+
+                    return {
+                        employeeCode: user.employeeCode,
+                        fullname: user.fullname,
+                        username: user.username,
+                        password: user.password,
+                        role: user.role,
+                        phoneNumber: user.phoneNumber,
+                        email: user.email,
+                        avatarImage: user.avatarImage,
+                        birthday: date,
+                        gender: user.gender,
+                        status: user.status
+                    }
+                })
+                console.log(lsUser);
+                res.render('users', { title: 'User Management', lsUser:lsUser })
             })
             .catch((error) => {
                 next(error)

@@ -34,10 +34,7 @@
             <% } %>
 
     <td class="align-middle text-center">
-        <span id="userBirthday" class="text-secondary text-xs font-weight-bold mw-25">
-            <% var txt_date = String(user.birthday).slice(8,18)%>
-            <%= txt_date.slice(0,2) +'/0'+ (Number(txt_date.slice(9,10))-1) +'/'+ txt_date.slice(3,8) %>
-        </span>
+        <span id="userBirthday" class="text-secondary text-xs font-weight-bold mw-25"><%= user.birthday %></span>
     </td>
     <td class="align-middle text-center">
         <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
