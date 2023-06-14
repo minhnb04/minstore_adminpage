@@ -14,7 +14,8 @@
                                 <th
                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                     Stt</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">User
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">Name /
+                                    User
                                 </th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                     Role</th>
@@ -43,7 +44,7 @@
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal confirm delete -->
 <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -62,21 +63,88 @@
     </div>
 </div>
 
-
-
 <!-- Delete -->
 <form id="delete_user_form" method="POST"></form>
 
 
+<!-- Modal update -->
+<div class="modal fade" id="updateUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Employee Code</label>
+                        <input type="text" class="form-control" id="currentUser_employee_code">
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Fullname</label>
+                        <input type="text" class="form-control" id="currentUser_fullname">
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Username</label>
+                        <input type="text" class="form-control" id="currentUser_username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Password</label>
+                        <input name="password" id="currentUser_password" type="password" class="form-control" disabled="true"
+                            placeholder="Password" aria-label="Password" aria-describedby="password-addon">
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Phone</label>
+                        <input type="text" class="form-control" id="currentUser_phoneNumber">
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Email</label>
+                        <input type="email" class="form-control" id="currentUser_email">
+                    </div>
+                    <div class="mb-3 d-flex justify-content-between">
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">Gender</label>
+                            <select name="gender" id="currentUser_gender" class="form-select pe-5"
+                                aria-label="Default select example">
+                                <option selected>Select gender</option>
+                                <option value="1">Male</option>
+                                <option value="2">Female</option>
+                                <option value="3">Other</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">Birthday</label>
+                            <input name="birthday" id="currentUser_birthday" type="date" class="form-control" placeholder="Birthday"
+                                aria-label="Birthday" aria-describedby="birthday-addon">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancle</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
+
+    //Lấy danh sách user từ server
+    var usersData = <%- JSON.stringify(lsUser) %>
+    console.log(usersData);
 
     var deleteUserModal = document.getElementById('deleteUserModal')
     var btn_cf_delete_user = document.getElementById('btn_cf_delete_user')
-    console.log(btn_cf_delete_user);
     var delete_user_form = document.getElementById('delete_user_form')
-    console.log(delete_user_form);
+
+    var updateUserModal = document.getElementById('updateUserModal')
 
     var userId;
+    var currentuser;
+
     deleteUserModal.addEventListener('show.bs.modal', function (event) {
         var button = event.relatedTarget
         userId = button.getAttribute('data-id')
@@ -87,4 +155,21 @@
         delete_user_form.action = '/users/delete/' + userId
         delete_user_form.submit()
     }
+
+    updateUserModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget
+        userId = button.getAttribute('data-id')
+        currentUser = usersData.find((user)=> user._id == userId)
+        
+        document.getElementById('currentUser_employee_code').value = currentUser.employeeCode
+        document.getElementById('currentUser_fullname').value = currentUser.fullname
+        document.getElementById('currentUser_username').value = currentUser.username
+        document.getElementById('currentUser_password').value = currentUser.password
+        document.getElementById('currentUser_phoneNumber').value = currentUser.phoneNumber
+        document.getElementById('currentUser_email').value = currentUser.email
+        document.getElementById('currentUser_gender').value = currentUser.gender
+        var formatStringDate = currentUser.birthday.slice(6, 10) + '-' + currentUser.birthday.slice(3, 5) + '-' + currentUser.birthday.slice(0, 2)
+        document.getElementById('currentUser_birthday').value = formatStringDate
+
+    })
 </script>

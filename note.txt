@@ -11,3 +11,5 @@ Sales: doanh thu bán hàng
 - thống kê doanh thu bán hàng của tứng mặt hàng
 
 mongodb+srv://minhnb04:byUia9oS3jND8tvX@cluster0.ltuhtop.mongodb.net/minstore
+
+    var usersData = <%- JSON.stringify(lsUser) %>

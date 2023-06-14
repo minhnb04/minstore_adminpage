@@ -1,6 +1,5 @@
-const user = require('../../models/user');
-const User = require('../../models/user')
-const moment = require('moment');
+// const user = require('../../models/user');
+const User = require('../../models/user');
 
 class UserController {
 
@@ -26,8 +25,8 @@ class UserController {
                         status: user.status
                     }
                 })
-                console.log(lsUser);
-                res.render('users', { title: 'User Management', lsUser: lsUser })
+                var usersJSON = JSON.stringify(lsUser)
+                res.render('users', { title: 'User Management', lsUser: lsUser, usersJSON: usersJSON})
             })
             .catch((error) => {
                 next(error)
@@ -66,8 +65,12 @@ class UserController {
     }
 
 
+    updateUser(req, res, next) {
+
+    }
+
     deleteUser(req, res, next) {
-        user.deleteOne({ _id: req.params.id })
+        User.deleteOne({ _id: req.params.id })
         .then(()=> res.redirect('/users'))
         .catch(next)
     }

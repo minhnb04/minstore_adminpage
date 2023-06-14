@@ -21,9 +21,9 @@
         <p class="text-xs font-weight-bold mb-0">
             <% if(user.role==1){ %>
                 <%= 'Manager' %>
-                    <% }else{ %>
-                        <%= 'Staff' %>
-                            <% } %>
+            <% }else{ %>
+                <%= 'Staff' %>
+            <% } %>
         </p>
         <p class="text-xs text-secondary mb-0">
             <%= user.employeeCode %>
@@ -45,8 +45,7 @@
                     </span>
                 </td>
                 <td class="align-middle text-center">
-                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                        data-original-title="Edit user">
+                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-id="<%= user._id %>" data-bs-toggle="modal" data-bs-target="#updateUserModal">
                         Edit
                     </a>
                     &#160
@@ -56,3 +55,4 @@
                     </a>
                 </td>
 </tr>
+
