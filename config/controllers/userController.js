@@ -1,4 +1,4 @@
-// const user = require('../../models/user');
+
 const User = require('../../models/user');
 
 class UserController {
@@ -66,6 +66,9 @@ class UserController {
 
 
     updateUser(req, res, next) {
+        User.updateOne({_id: req.params.id},req.body)
+        .then(()=> res.redirect('/users'))
+        .catch(next)
 
     }
 

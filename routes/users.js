@@ -8,9 +8,10 @@ const userController = require('../config/controllers/userController')
 router.get('/', userController.index);
 
 router.post('/add-user', userController.addUser);
-router.post('/update/:id', userController.updateUser);
 
-router.post('/delete/:id', userController.deleteUser);
+router.put('/update/:id', userController.updateUser);
+
+router.delete('/delete/:id', userController.deleteUser);
 
 
 module.exports = router;

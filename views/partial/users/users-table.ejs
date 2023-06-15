@@ -32,8 +32,8 @@
                         </thead>
                         <tbody>
 
-                            <% lsUser.forEach(function(user){ %>
-                                <%- include('users-item', {user: user}); %>
+                            <% lsUser.forEach(function(user,i){ %>
+                                <%- include('users-item', {user: user, i: i}); %>
                                     <% }); %>
 
                         </tbody>
@@ -76,32 +76,32 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form id="update_user_form" method="POST">
 
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Employee Code</label>
-                        <input type="text" class="form-control" id="currentUser_employee_code">
+                        <input type="text" name="employeeCode" class="form-control" id="currentUser_employee_code">
                     </div>
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Fullname</label>
-                        <input type="text" class="form-control" id="currentUser_fullname">
+                        <input type="text" name="fullname" class="form-control" id="currentUser_fullname">
                     </div>
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Username</label>
-                        <input type="text" class="form-control" id="currentUser_username">
+                        <input type="text" name="username" class="form-control" id="currentUser_username">
                     </div>
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Password</label>
-                        <input name="password" id="currentUser_password" type="password" class="form-control" disabled="true"
+                        <input name="password" id="currentUser_password" type="password" class="form-control" readonly
                             placeholder="Password" aria-label="Password" aria-describedby="password-addon">
                     </div>
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Phone</label>
-                        <input type="text" class="form-control" id="currentUser_phoneNumber">
+                        <input type="text" name="phoneNumber" class="form-control" id="currentUser_phoneNumber">
                     </div>
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Email</label>
-                        <input type="email" class="form-control" id="currentUser_email">
+                        <input type="email" name="email" class="form-control" id="currentUser_email">
                     </div>
                     <div class="mb-3 d-flex justify-content-between">
                         <div class="mb-3">
@@ -123,7 +123,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save</button>
+                <button id="btn_cf_update_user" type="button" class="btn btn-primary">Save</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancle</button>
             </div>
         </div>
@@ -141,6 +141,8 @@
     var delete_user_form = document.getElementById('delete_user_form')
 
     var updateUserModal = document.getElementById('updateUserModal')
+    var btn_cf_update_user = document.getElementById('btn_cf_update_user')
+    var update_user_form = document.getElementById('update_user_form')
 
     var userId;
     var currentuser;
@@ -152,7 +154,7 @@
     })
 
     btn_cf_delete_user.onclick = function () {
-        delete_user_form.action = '/users/delete/' + userId
+        delete_user_form.action = '/users/delete/'+ userId+'?_method=DELETE'
         delete_user_form.submit()
     }
 
@@ -172,4 +174,11 @@
         document.getElementById('currentUser_birthday').value = formatStringDate
 
     })
+
+    btn_cf_update_user.onclick = function(){
+        update_user_form.action = '/users/update/'+ userId+'?_method=PUT'
+        update_user_form.submit()
+    }
+
+
 </script>
