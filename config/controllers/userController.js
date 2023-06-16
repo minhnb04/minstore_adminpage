@@ -52,7 +52,6 @@ class UserController {
             }
         )
 
-
         user.save()
             .then((result) => {
                 console.log('User created:', result);
@@ -69,7 +68,7 @@ class UserController {
         User.updateOne({_id: req.params.id},req.body)
         .then(()=> res.redirect('/users'))
         .catch(next)
-
+        res.redirect('/users')
     }
 
     deleteUser(req, res, next) {

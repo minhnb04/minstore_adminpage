@@ -120,6 +120,17 @@
                                 aria-label="Birthday" aria-describedby="birthday-addon">
                         </div>
                     </div>
+                    <div>
+                        <div class="form-check form-check-inline">
+                            <input name="status" class="form-check-input" type="checkbox" id="ckb_status_active" value="true">
+                            <label class="form-check-label mt-1" for="inlineCheckbox1">Active</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input name="status" class="form-check-input" type="checkbox" id="ckb_status_disable" value="false">
+                            <label class="form-check-label mt-1" for="inlineCheckbox2">Disable</label>
+                          </div>
+                        
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -173,7 +184,27 @@
         var formatStringDate = currentUser.birthday.slice(6, 10) + '-' + currentUser.birthday.slice(3, 5) + '-' + currentUser.birthday.slice(0, 2)
         document.getElementById('currentUser_birthday').value = formatStringDate
 
+
+        if (currentUser.status == true) {
+            document.getElementById('ckb_status_active').checked = true
+            document.getElementById('ckb_status_disable').checked = false
+
+        } else {
+            document.getElementById('ckb_status_active').checked = false
+            document.getElementById('ckb_status_disable').checked = true
+        }
+
     })
+
+    document.getElementById('ckb_status_active').onclick = function(){
+        document.getElementById('ckb_status_disable').checked = false
+
+    }
+
+    document.getElementById('ckb_status_disable').onclick = function(){
+        document.getElementById('ckb_status_active').checked = false
+
+    }
 
     btn_cf_update_user.onclick = function(){
         update_user_form.action = '/users/update/'+ userId+'?_method=PUT'
