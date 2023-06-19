@@ -13,6 +13,8 @@ router.put('/update/:id', userController.updateUser);
 
 router.delete('/delete/:id', userController.deleteUser);
 
+router.get('/search', userController.searchUser);
+
 
 module.exports = router;
 

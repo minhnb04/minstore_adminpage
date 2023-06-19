@@ -76,6 +76,11 @@ class UserController {
         .then(()=> res.redirect('/users'))
         .catch(next)
     }
+
+    searchUser(req, res, next) {
+        res.json('Search')
+    }
+
 }
 
 module.exports = new UserController;
