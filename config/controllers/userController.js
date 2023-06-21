@@ -1,4 +1,5 @@
 
+// const { query } = require('express');
 const User = require('../../models/user');
 
 class UserController {
@@ -46,7 +47,7 @@ class UserController {
                 email: req.body.email,
                 birthday: req.body.birthday,
                 gender: req.body.gender,
-                avatarImage: 'images/marie.jpg',
+                avatarImage: '/images/marie.jpg',
                 role: 2,
                 status: true,
             }
@@ -78,7 +79,44 @@ class UserController {
     }
 
     searchUser(req, res, next) {
-        res.json('Search')
+        var keyword_search = req.query.keyword_search
+        var query = User.where({
+            $or:[
+                {fullname:{$regex:keyword_search, $options:'i'}},
+                {username:{$regex:keyword_search, $options:'i'}},
+                {employeeCode:{$regex:keyword_search, $options:'i'}},
+                {phoneNumber:{$regex:keyword_search, $options:'i'}},
+                {email:{$regex:keyword_search, $options:'i'}},
+            ]
+        })
+
+        User.find(query)
+        .then((user)=>{
+            var lsUser = user.map(function (user) {
+                var date = user.birthday.toISOString()
+                var date = date.slice(8, 10) + '/' + date.slice(5, 7) + '/' + date.slice(0, 4)
+                return {
+                    _id: user._id,
+                    employeeCode: user.employeeCode,
+                    fullname: user.fullname,
+                    username: user.username,
+                    password: user.password,
+                    role: user.role,
+                    phoneNumber: user.phoneNumber,
+                    email: user.email,
+                    avatarImage: user.avatarImage,
+                    birthday: date,
+                    gender: user.gender,
+                    status: user.status
+                }
+            })
+            var usersJSON = JSON.stringify(lsUser)
+            res.render('users', { title: 'User Management', lsUser: lsUser, usersJSON: usersJSON})
+        })
+        .catch((error)=>{
+            next(error)
+        })
+
     }
 
 }
