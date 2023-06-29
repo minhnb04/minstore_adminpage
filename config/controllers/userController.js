@@ -66,7 +66,21 @@ class UserController {
 
 
     updateUser(req, res, next) {
-        User.updateOne({_id: req.params.id},req.body)
+        User.updateOne({_id: req.params.id},
+            {
+                employeeCode: req.body.employeeCode,
+                fullname: req.body.fullname,
+                username: req.body.username,
+                password: req.body.password,
+                phoneNumber: req.body.phoneNumber,
+                email: req.body.email,
+                birthday: req.body.birthday,
+                gender: req.body.gender,
+                avatarImage: req.file.filename,
+                role: 2,
+                status: true,
+            }
+            )
         .then(()=> res.redirect('/users'))
         .catch(next)
         res.redirect('/users')

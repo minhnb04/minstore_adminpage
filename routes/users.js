@@ -10,7 +10,7 @@ var storage = multer.diskStorage({
         res(null, 'uploads/userImage')
     },
     filename: (req, file, res)=>{
-        res(null, file.originalname)
+        res(null,Date.now()+'-'+file.originalname)
     }
 })
 
@@ -20,7 +20,7 @@ router.get('/', userController.index);
 
 router.post('/add-user',upload.single('avatarImage'),userController.addUser);
 
-router.put('/update/:id', userController.updateUser);
+router.put('/update/:id',upload.single('avatarImage'), userController.updateUser);
 
 router.delete('/delete/:id', userController.deleteUser);
 
