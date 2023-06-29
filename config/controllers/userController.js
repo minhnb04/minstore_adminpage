@@ -9,7 +9,7 @@ class UserController {
         User.find()
             .then((users) => {
                 var lsUser = users.map(function (user) {
-                    var date = user.birthday.toISOString()
+                    var date = user.birthday
                     var date = date.slice(8, 10) + '/' + date.slice(5, 7) + '/' + date.slice(0, 4)
                     return {
                         _id: user._id,
@@ -47,7 +47,7 @@ class UserController {
                 email: req.body.email,
                 birthday: req.body.birthday,
                 gender: req.body.gender,
-                avatarImage: '/images/marie.jpg',
+                avatarImage: req.file.filename,
                 role: 2,
                 status: true,
             }

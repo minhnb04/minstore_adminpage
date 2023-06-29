@@ -10,7 +10,7 @@ var User = new Schema({
     phoneNumber: String,
     email: String,
     avatarImage: String,
-    birthday: Date,
+    birthday: String,
     gender: Number,
     status: Boolean
 
