@@ -1,12 +1,13 @@
 
 // const { query } = require('express');
 const User = require('../../models/user');
+const fs = require('fs');
 
 class UserController {
 
-    index(req, res, next) {
+    async index(req, res, next) {
 
-        User.find()
+        await User.find()
             .then((users) => {
                 var lsUser = users.map(function (user) {
                     var date = user.birthday
@@ -35,7 +36,7 @@ class UserController {
 
     }
 
-    addUser(req, res, next) {
+    async addUser(req, res, next) {
 
         var user = new User(
             {
@@ -53,7 +54,7 @@ class UserController {
             }
         )
 
-        user.save()
+        await user.save()
             .then((result) => {
                 console.log('User created:', result);
                 res.redirect('/users')
@@ -65,25 +66,39 @@ class UserController {
     }
 
 
-    updateUser(req, res, next) {
-        User.updateOne({_id: req.params.id},
-            {
-                employeeCode: req.body.employeeCode,
-                fullname: req.body.fullname,
-                username: req.body.username,
-                password: req.body.password,
-                phoneNumber: req.body.phoneNumber,
-                email: req.body.email,
-                birthday: req.body.birthday,
-                gender: req.body.gender,
-                avatarImage: req.file.filename,
-                role: 2,
-                status: true,
-            }
+    async updateUser(req, res, next) {
+        try{
+            const currentUser = await User.findById(req.params.id)
+            const oldavatarImage = currentUser.avatarImage;
+
+            await User.updateOne({_id: req.params.id},
+                {
+                    employeeCode: req.body.employeeCode,
+                    fullname: req.body.fullname,
+                    username: req.body.username,
+                    password: req.body.password,
+                    phoneNumber: req.body.phoneNumber,
+                    email: req.body.email,
+                    birthday: req.body.birthday,
+                    gender: req.body.gender,
+                    avatarImage: req.file.filename,
+                    role: 2,
+                    status: true,
+                }
             )
-        .then(()=> res.redirect('/users'))
-        .catch(next)
-        res.redirect('/users')
+                .then(()=> res.redirect('/users'))
+                .catch(next)
+
+            if (oldavatarImage !== req.file.filename) {
+                console.log('uploads/userImage/'+oldavatarImage)
+                await fs.unlinkSync('uploads/userImage/'+oldavatarImage);
+            }
+
+            res.redirect('/users')
+
+        }catch (err) {
+            console.error(err);
+        }
     }
 
     deleteUser(req, res, next) {
