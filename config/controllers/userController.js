@@ -90,8 +90,7 @@ class UserController {
                 .catch(next)
 
             if (oldavatarImage !== req.file.filename) {
-                console.log('uploads/userImage/'+oldavatarImage)
-                await fs.unlinkSync('uploads/userImage/'+oldavatarImage);
+                fs.unlinkSync('uploads/userImage/'+oldavatarImage);
             }
 
             res.redirect('/users')
@@ -122,7 +121,7 @@ class UserController {
         User.find(query)
         .then((user)=>{
             var lsUser = user.map(function (user) {
-                var date = user.birthday.toISOString()
+                var date = user.birthday
                 var date = date.slice(8, 10) + '/' + date.slice(5, 7) + '/' + date.slice(0, 4)
                 return {
                     _id: user._id,

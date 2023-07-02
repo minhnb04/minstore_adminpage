@@ -31,3 +31,91 @@
         </div>
     </div>
 </div>
+
+
+<!-- Modal delete product -->
+<div class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete this product?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary bg-danger">Delete</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal update product -->
+<div class="modal fade" id="updateProductModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Update product</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="card-body">
+                    <form role="form text-left">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Product name" aria-label="Product name" aria-describedby="productname-addon">
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Brand" aria-label="Brand" aria-describedby="brand-addon">
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Classify" aria-label="Classify" aria-describedby="classify-addon">
+                        </div>
+
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Specifications" aria-label="Specifications" aria-describedby="specifications-addon">
+                        </div>
+                        <div class="mb-3">
+                            <select class="form-select pe-5" aria-label="Default select example">
+                                <option selected>Select color</option>
+                                <option value="white">white</option>
+                                <option value="black">black</option>
+                                <option value="gold">gold</option>
+                                <option value="silver">silver</option>
+                                <option value="gray">gray</option>
+                                <option value="blue">blue</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 d-flex justify-content-between">
+                            <div class="mb-3">
+                                <input type="number" class="form-control" placeholder="Quantity" aria-label="Quantity" aria-describedby="quantity-addon">
+                            </div>
+                            <div class="mb-3">
+                                <input type="date" disabled="true" class="form-control" placeholder="Birthday" aria-label="Birthday" aria-describedby="birthday-addon">
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="mb-4 d-flex justify-content-center">
+                                <img src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
+                                     alt="example placeholder" style="width: 300px;" />
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <div class="btn btn-primary btn-rounded bg-gradient-dark">
+                                    <label class="form-label text-white m-1" for="customFile1">Choose image</label>
+                                    <input type="file" class="form-control d-none" id="customFile1" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-around">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
