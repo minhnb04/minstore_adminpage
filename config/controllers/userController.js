@@ -38,40 +38,17 @@ class UserController {
 
     async addUser(req, res, next) {
 
-        var user = new User(
-            {
-                employeeCode: req.body.employeeCode,
-                fullname: req.body.fullname,
-                username: req.body.username,
-                password: req.body.password,
-                phoneNumber: req.body.phoneNumber,
-                email: req.body.email,
-                birthday: req.body.birthday,
-                gender: req.body.gender,
-                avatarImage: req.file.filename,
-                role: 2,
-                status: true,
-            }
-        )
-
-        await user.save()
-            .then((result) => {
-                console.log('User created:', result);
-                res.redirect('/users')
-            })
-            .catch((error) => {
-                console.error('Error creating user:', error);
-                res.json(error)
-            });
-    }
-
-
-    async updateUser(req, res, next) {
-        try{
-            const currentUser = await User.findById(req.params.id)
-            const oldavatarImage = currentUser.avatarImage;
-
-            await User.updateOne({_id: req.params.id},
+        if(req.body.employeeCode
+            && req.body.fullname
+            && req.body.username
+            && req.body.password
+            && req.body.phoneNumber
+            && req.body.email
+            && req.body.birthday
+            && req.body.gender
+            && req.file
+        ){
+            var user = new User(
                 {
                     employeeCode: req.body.employeeCode,
                     fullname: req.body.fullname,
@@ -82,6 +59,53 @@ class UserController {
                     birthday: req.body.birthday,
                     gender: req.body.gender,
                     avatarImage: req.file.filename,
+                    role: 2,
+                    status: true,
+                })
+
+            try {
+                await user.save()
+                    .then((result) => {
+                        console.log('User created:', result);
+                        res.redirect('/users')
+                    })
+                    .catch((error) => {
+                        console.error('Error creating user:', error);
+                        res.json(error)
+                    });
+            }catch (err) {
+                console.error(err);
+            }
+
+        }else {
+            console.log("Yêu cầu nhập đầy đủ thông tin!")
+        }
+
+    }
+
+
+    async updateUser(req, res, next) {
+        try{
+            const currentUser = await User.findById(req.params.id)
+            const oldavatarImage = currentUser.avatarImage;
+            var imgUpdate;
+            if(req.file){
+                imgUpdate = req.file.filename
+            }else {
+                imgUpdate = currentUser.avatarImage
+
+            }
+            await User.updateOne({_id: req.params.id},
+                {
+                    employeeCode: req.body.employeeCode,
+                    fullname: req.body.fullname,
+                    username: req.body.username,
+                    password: req.body.password,
+                    phoneNumber: req.body.phoneNumber,
+                    email: req.body.email,
+                    birthday: req.body.birthday,
+                    gender: req.body.gender,
+                    avatarImage: imgUpdate,
                     role: 2,
                     status: true,
                 }

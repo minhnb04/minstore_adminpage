@@ -7,12 +7,12 @@ var Product = new Schema({
     classify: String,
     color: String,
     quantity: Number,
-    specifications: Number,
+    specifications: String,
+    memory:Number,
+    price:Number,
     lastUpdated: Date,
-    images: String,
-    avatarImage: String,
+    productImage: String,
     status: Boolean
-
 })
 
 module.exports = mongoose.model('Prduct', Product)
