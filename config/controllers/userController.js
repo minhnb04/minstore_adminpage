@@ -11,7 +11,7 @@ class UserController {
             .then((users) => {
                 var lsUser = users.map(function (user) {
                     var date = user.birthday
-                    var date = date.slice(8, 10) + '/' + date.slice(5, 7) + '/' + date.slice(0, 4)
+                    date = date.slice(8, 10) + '/' + date.slice(5, 7) + '/' + date.slice(0, 4)
                     return {
                         _id: user._id,
                         employeeCode: user.employeeCode,
@@ -88,11 +88,11 @@ class UserController {
         try{
             const currentUser = await User.findById(req.params.id)
             const oldavatarImage = currentUser.avatarImage;
-            var imgUpdate;
+            var image;
             if(req.file){
-                imgUpdate = req.file.filename
+                image = req.file.filename
             }else {
-                imgUpdate = currentUser.avatarImage
+                image = currentUser.avatarImage
 
             }
             await User.updateOne({_id: req.params.id},
@@ -105,9 +105,9 @@ class UserController {
                     email: req.body.email,
                     birthday: req.body.birthday,
                     gender: req.body.gender,
-                    avatarImage: imgUpdate,
+                    avatarImage: image,
                     role: 2,
-                    status: true,
+                    status: req.body.status,
                 }
             )
                 .then(()=> res.redirect('/users'))

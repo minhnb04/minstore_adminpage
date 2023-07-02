@@ -21,9 +21,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <% for (var i = 0; i < 7; i++){ %>
-                                <%- include('products-item',{i}); %>
-                            <% } %>
+
+                        <% lsProduct.forEach(function(product,i){ %>
+                            <%- include('products-item', {product: product, i: i}); %>
+                        <% }); %>
                         </tbody>
                     </table>
                 </div>

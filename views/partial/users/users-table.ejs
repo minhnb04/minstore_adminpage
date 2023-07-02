@@ -197,7 +197,6 @@
         document.getElementById('currentUser_gender').value = currentUser.gender
         var formatStringDate = currentUser.birthday.slice(6, 10) + '-' + currentUser.birthday.slice(3, 5) + '-' + currentUser.birthday.slice(0, 2)
         document.getElementById('currentUser_birthday').value = formatStringDate
-        // document.getElementsByName('avatarImage')[0].src = '/userImage/'+currentUser.avatarImage
 
         if (currentUser.status == true) {
             document.getElementById('ckb_status_active').checked = true

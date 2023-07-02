@@ -29,15 +29,15 @@
             <%= user.employeeCode %>
         </p>
     </td>
-    <% if(user.status==true){ %>
-        <td class="align-middle text-center text-sm">
+
+    <td class="align-middle text-center text-sm">
+        <% if(user.status==true){ %>
             <span class="badge badge-sm bg-gradient-success">Active</span>
-        </td>
         <% }else{ %>
-            <td class="align-middle text-center text-sm">
-                <span class="badge badge-sm bg-gradient-secondary">Disable</span>
-            </td>
-            <% } %>
+            <span class="badge badge-sm bg-gradient-secondary">Disable</span>
+        <% } %>
+    </td>
+
 
                 <td class="align-middle text-center">
                     <span id="userBirthday" class="text-secondary text-xs font-weight-bold mw-25">

@@ -10,9 +10,9 @@ var Product = new Schema({
     specifications: String,
     memory:Number,
     price:Number,
-    lastUpdated: Date,
-    productImage: String,
+    lastUpdated: String,
+    productImages: Array,
     status: Boolean
 })
 
-module.exports = mongoose.model('Prduct', Product)
+module.exports = mongoose.model('Product', Product)

@@ -17,9 +17,9 @@ var upload = multer({storage:storage});
 
 router.get('/', productController.index);
 
-router.post('/add-product',productController.addProduct);
+router.post('/add-product',upload.array('productImages', 8), productController.addProduct);
 
-router.put('/update/:id', productController.updateProduct);
+router.put('/update/:id',upload.single('productImages'), productController.updateProduct);
 
 router.delete('/delete/:id', productController.deleteProduct);
 
