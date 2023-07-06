@@ -124,9 +124,17 @@ class UserController {
         }
     }
 
-    deleteUser(req, res, next) {
+    async deleteUser(req, res, next) {
+        const currentUser = await User.findById(req.params.id)
+        const oldavatarImage = currentUser.avatarImage;
+         console.log(currentUser)
+         console.log(oldavatarImage)
+
         User.deleteOne({ _id: req.params.id })
-        .then(()=> res.redirect('/users'))
+        .then(()=>{
+            fs.unlinkSync('uploads/userImage/'+oldavatarImage);
+            return  res.redirect('/users')
+        })
         .catch(next)
     }
 
