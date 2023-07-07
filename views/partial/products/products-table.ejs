@@ -46,13 +46,15 @@
                 Do you want to delete this product?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary bg-danger">Delete</button>
+                <button id="btn_cf_delete_product" type="button" class="btn btn-primary bg-danger">Delete</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Delete -->
+<form id="delete_product_form" method="POST"></form>
 
 <!-- Modal update product -->
 <div class="modal fade" id="updateProductModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -99,14 +101,14 @@
                         </div>
 
                         <div>
-                            <div class="mb-4 d-flex justify-content-center">
-                                <img src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
-                                     alt="example placeholder" style="width: 300px;" />
-                            </div>
+<!--                            <div class="mb-4 d-flex justify-content-center">-->
+<!--                                <img src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"-->
+<!--                                     alt="example placeholder" style="width: 300px;" />-->
+<!--                            </div>-->
                             <div class="d-flex justify-content-center">
                                 <div class="btn btn-primary btn-rounded bg-gradient-dark">
                                     <label class="form-label text-white m-1" for="customFile1">Choose image</label>
-                                    <input type="file" class="form-control d-none" id="customFile1" />
+                                    <input type="file" class="form-control" id="customFile1" />
                                 </div>
                             </div>
                         </div>
@@ -120,3 +122,22 @@
         </div>
     </div>
 </div>
+
+<script>
+    var deleteProductModal = document.getElementById('deleteProductModal')
+    var btn_cf_delete_product = document.getElementById('btn_cf_delete_product')
+    var delete_product_form = document.getElementById('delete_product_form')
+
+    var productId;
+    deleteProductModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget
+        productId = button.getAttribute('data-id')
+        console.log(productId)
+    })
+
+    btn_cf_delete_product.onclick = function (){
+        delete_product_form.action = '/products/delete/'+ productId+'?_method=DELETE'
+        delete_product_form.submit()
+    }
+
+</script>

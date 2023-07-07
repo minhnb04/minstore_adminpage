@@ -37,11 +37,11 @@
         <span class="text-secondary text-xs font-weight-bold"><%= product.lastUpdated%></span>
     </td>
     <td class="align-middle text-center">
-        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#updateProductModal">
+        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-id="<%= product._id %>" data-bs-toggle="modal" data-bs-target="#updateProductModal">
             Edit
         </a>
         &#160
-        <a href="javascript:;" class="text-secondary font-weight-bold text-xs text-danger" data-bs-toggle="modal" data-bs-target="#deleteProductModal">
+        <a href="javascript:;" class="text-secondary font-weight-bold text-xs text-danger" data-id="<%= product._id %>" data-bs-toggle="modal" data-bs-target="#deleteProductModal">
             Delete
         </a>
     </td>

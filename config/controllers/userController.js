@@ -1,12 +1,10 @@
 
-// const { query } = require('express');
 const User = require('../../models/user');
 const fs = require('fs');
 
 class UserController {
 
     async index(req, res, next) {
-
         await User.find()
             .then((users) => {
                 var lsUser = users.map(function (user) {
@@ -127,9 +125,6 @@ class UserController {
     async deleteUser(req, res, next) {
         const currentUser = await User.findById(req.params.id)
         const oldavatarImage = currentUser.avatarImage;
-         console.log(currentUser)
-         console.log(oldavatarImage)
-
         User.deleteOne({ _id: req.params.id })
         .then(()=>{
             fs.unlinkSync('uploads/userImage/'+oldavatarImage);

@@ -32,8 +32,6 @@ class ProductController {
                 next(error)
             })
 
-
-        res.render('products', { title: 'Products Management' })
     }
 
     async addProduct(req, res, next) {
@@ -91,8 +89,18 @@ class ProductController {
         res.render('products', { title: 'Update Products' })
     }
 
-    deleteProduct(req, res, next) {
-        res.render('products', { title: 'Delete Products' })
+    async deleteProduct(req, res, next) {
+        const currentProduct = await Product.findById(req.params.id)
+        const oldproductImage = currentProduct.productImages;
+
+        await Product.deleteOne({ _id: req.params.id })
+            .then(()=>{
+                oldproductImage.forEach(function (image){
+                    fs.unlinkSync('uploads/productImage/'+image);
+                })
+                return res.redirect('/products')
+            })
+            .catch(next)
     }
 
     searchProduct(req, res, next) {
