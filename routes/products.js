@@ -19,7 +19,7 @@ router.get('/', productController.index);
 
 router.post('/add-product',upload.array('productImages', 8), productController.addProduct);
 
-router.put('/update/:id',upload.single('productImages'), productController.updateProduct);
+router.put('/update/:id',upload.array('productImages', 8), productController.updateProduct);
 
 router.delete('/delete/:id', productController.deleteProduct);
 

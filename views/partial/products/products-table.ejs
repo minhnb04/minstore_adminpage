@@ -25,6 +25,7 @@
                         <% lsProduct.forEach(function(product,i){ %>
                             <%- include('products-item', {product: product, i: i}); %>
                         <% }); %>
+                        
                         </tbody>
                     </table>
                 </div>
@@ -65,23 +66,30 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="card-body">
-                    <form role="form text-left">
+
+                    <form id="update_product_form" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="Product name" aria-label="Product name" aria-describedby="productname-addon">
+                            <input type="text" name="productName" id="productNameUpdate" class="form-control" placeholder="Product name" aria-label="Product name" aria-describedby="productname-addon">
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="Brand" aria-label="Brand" aria-describedby="brand-addon">
+                            <input type="text" name="brand" id="brandUpdate" class="form-control" placeholder="Brand" aria-label="Brand" aria-describedby="brand-addon">
                         </div>
-                        <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="Classify" aria-label="Classify" aria-describedby="classify-addon">
+
+                        <div class="mb-3 d-flex justify-content-between">
+                            <select name="classify" id="classifyUpdate" class="form-select pe-5" aria-label="Default select example">
+                                <option selected>Classify</option>
+                                <option value="Mobile">Mobile</option>
+                                <option value="Tablet">Tablet</option>
+                                <option value="Accessory">Accessory</option>
+                            </select>
                         </div>
 
                         <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="Specifications" aria-label="Specifications" aria-describedby="specifications-addon">
+                            <input type="text" name="specifications" id="specificationsUpdate" class="form-control" placeholder="Specifications" aria-label="Specifications" aria-describedby="specifications-addon">
                         </div>
-                        <div class="mb-3">
-                            <select class="form-select pe-5" aria-label="Default select example">
+
+                        <div class="mb-3 d-flex justify-content-between">
+                            <select name="color" id="colorUpdate" class="form-select w-30 pe-5" aria-label="Default select example">
                                 <option selected>Select color</option>
                                 <option value="white">white</option>
                                 <option value="black">black</option>
@@ -90,45 +98,75 @@
                                 <option value="gray">gray</option>
                                 <option value="blue">blue</option>
                             </select>
+                            <select name="memory" id="memoryUpdate" class="form-select w-30 pe-5" aria-label="Default select example">
+                                <option selected>Select memory</option>
+                                <option value="64">64GB</option>
+                                <option value="128">128GB</option>
+                                <option value="256">256GB</option>
+                                <option value="512">512GB</option>
+                                <option value="1024">1TB</option>
+                            </select>
                         </div>
+
                         <div class="mb-3 d-flex justify-content-between">
-                            <div class="mb-3">
-                                <input type="number" class="form-control" placeholder="Quantity" aria-label="Quantity" aria-describedby="quantity-addon">
+                            <div class="mb-3 w-30">
+                                <input name="quantity" id="quantityUpdate" type="number" class="form-control" placeholder="Quantity" aria-label="Quantity" aria-describedby="quantity-addon">
                             </div>
-                            <div class="mb-3">
-                                <input type="date" disabled="true" class="form-control" placeholder="Birthday" aria-label="Birthday" aria-describedby="birthday-addon">
+                            <div class="mb-3 w-30">
+                                <input name="lastUpdated" id="lastUpdatedUpdate" type="date" class="form-control">
                             </div>
                         </div>
 
-                        <div>
-<!--                            <div class="mb-4 d-flex justify-content-center">-->
-<!--                                <img src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"-->
-<!--                                     alt="example placeholder" style="width: 300px;" />-->
-<!--                            </div>-->
-                            <div class="d-flex justify-content-center">
-                                <div class="btn btn-primary btn-rounded bg-gradient-dark">
-                                    <label class="form-label text-white m-1" for="customFile1">Choose image</label>
-                                    <input type="file" class="form-control" id="customFile1" />
-                                </div>
+                        <div class="mb-3">
+                            <input name="price" id="priceUpdate" type="number" class="form-control" placeholder="Price (VNĐ)" aria-label="Price" aria-describedby="Price-addon">
+                        </div>
+
+                        <div class="d-flex justify-content-center">
+                            <div class="btn btn-primary btn-rounded bg-gradient-dark">
+                                <label class="form-label text-white m-1" for="customFile1">Choose image</label>
+                                <input name="productImages" type="file" class="form-control" id="customFile1" multiple/>
+                            </div>
+                        </div>
+
+                        <div role="group">
+                            <div class="form-check form-check-inline">
+                                <input name="status" class="form-check-input" type="checkbox" id="ckb_status_active" value="true">
+                                <label class="form-check-label mt-1" for="inlineCheckbox1">Active</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input name="status" class="form-check-input" type="checkbox" id="ckb_status_disable" value="false">
+                                <label class="form-check-label mt-1" for="inlineCheckbox2">Disable</label>
                             </div>
                         </div>
                     </form>
+
+                <div class="modal-footer d-flex justify-content-around">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="btn_cf_update_product" type="button" class="btn btn-primary">Update</button>
                 </div>
             </div>
-            <div class="modal-footer d-flex justify-content-around">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Update</button>
-            </div>
+
+
         </div>
     </div>
 </div>
 
 <script>
+    //Lấy danh sách product từ server
+    var productsData = <%- JSON.stringify(lsProduct) %>
+    console.log(productsData);
+
     var deleteProductModal = document.getElementById('deleteProductModal')
     var btn_cf_delete_product = document.getElementById('btn_cf_delete_product')
     var delete_product_form = document.getElementById('delete_product_form')
 
+    var updateProductModal = document.getElementById('updateProductModal')
+    var btn_cf_update_product = document.getElementById('btn_cf_update_product')
+    var update_product_form = document.getElementById('update_product_form')
+
     var productId;
+    var currentProduct;
+
     deleteProductModal.addEventListener('show.bs.modal', function (event) {
         var button = event.relatedTarget
         productId = button.getAttribute('data-id')
@@ -139,5 +177,56 @@
         delete_product_form.action = '/products/delete/'+ productId+'?_method=DELETE'
         delete_product_form.submit()
     }
+
+    updateProductModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget
+        productId = button.getAttribute('data-id')
+        currentProduct = productsData.find((product)=> product._id == productId)
+
+        document.getElementById('productNameUpdate').value = currentProduct.productName
+        document.getElementById('brandUpdate').value = currentProduct.brand
+        document.getElementById('classifyUpdate').value = currentProduct.classify
+        document.getElementById('specificationsUpdate').value = currentProduct.specifications
+        document.getElementById('colorUpdate').value = currentProduct.color
+        document.getElementById('memoryUpdate').value = currentProduct.memory
+        document.getElementById('quantityUpdate').value = currentProduct.quantity
+        document.getElementById('priceUpdate').value = currentProduct.price
+
+        const today = new Date()
+        const year = today.getFullYear()
+        const month = String(today.getMonth()+1).padStart(2,'0')
+        const day = String(today.getDay()+2).padStart(2,'0')
+
+
+        console.log(`${year}-${month}-${day}`)
+
+        document.getElementById('lastUpdatedUpdate').value = `${year}-${month}-${day}`;
+
+        if (currentProduct.status == true) {
+            document.getElementById('ckb_status_active').checked = true
+            document.getElementById('ckb_status_disable').checked = false
+
+        } else {
+            document.getElementById('ckb_status_active').checked = false
+            document.getElementById('ckb_status_disable').checked = true
+        }
+
+    })
+
+    document.getElementById('ckb_status_active').onclick = function(){
+        document.getElementById('ckb_status_disable').checked = false
+
+    }
+
+    document.getElementById('ckb_status_disable').onclick = function(){
+        document.getElementById('ckb_status_active').checked = false
+
+    }
+
+    btn_cf_update_product.onclick = function(){
+        update_product_form.action = '/products/update/'+productId+'?_method=PUT'
+        update_product_form.submit()
+    }
+
 
 </script>

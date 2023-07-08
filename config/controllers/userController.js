@@ -108,15 +108,13 @@ class UserController {
                     status: req.body.status,
                 }
             )
-                .then(()=> res.redirect('/users'))
+                .then(function (){
+                    if (oldavatarImage !== req.file.filename) {
+                        fs.unlinkSync('uploads/userImage/'+oldavatarImage);
+                    }
+                    res.redirect('/users')
+                })
                 .catch(next)
-
-            if (oldavatarImage !== req.file.filename) {
-                fs.unlinkSync('uploads/userImage/'+oldavatarImage);
-            }
-
-            res.redirect('/users')
-
         }catch (err) {
             console.error(err);
         }

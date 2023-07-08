@@ -62,7 +62,7 @@ class ProductController {
                     price:req.body.price,
                     lastUpdated: req.body.lastUpdated,
                     productImages: images,
-                    status: true
+                    status: req.body.quantity > 0,
                 })
             try {
                 await product.save()
@@ -81,12 +81,53 @@ class ProductController {
             console.log("Yêu cầu nhập đầy đủ thông tin!")
         }
 
-
-
     }
 
-    updateProduct(req, res, next) {
-        res.render('products', { title: 'Update Products' })
+    async updateProduct(req, res, next) {
+        try{
+            const currentProduct = await Product.findById(req.params.id)
+            const oldproductImage = currentProduct.productImages;
+            var images;
+            if(req.files.length > 0){
+                images = req.files.map(file => file.filename);
+            }
+            else {
+                images = oldproductImage.slice()
+            }
+
+            await Product.updateOne({_id: req.params.id},
+                {
+                    productName: req.body.productName,
+                    brand: req.body.brand,
+                    classify: req.body.classify,
+                    color: req.body.color,
+                    quantity: req.body.quantity,
+                    specifications: req.body.specifications,
+                    memory: req.body.memory,
+                    price: req.body.price,
+                    lastUpdated: req.body.lastUpdated,
+                    productImages: images,
+                    status: req.body.status,
+                }
+            )
+                .then(function(){
+
+                    if (JSON.stringify(oldproductImage) != JSON.stringify(images)) {
+                        oldproductImage.forEach(function (image){
+                            fs.unlinkSync('uploads/productImage/'+image);
+                        })
+                    }
+
+                    res.redirect('/products')
+                })
+                .catch(next)
+
+        }catch (err) {
+            console.error(err);
+        }
+
+
+
     }
 
     async deleteProduct(req, res, next) {
