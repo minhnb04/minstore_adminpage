@@ -72,7 +72,7 @@ class UserController {
                         res.json(error)
                     });
             }catch (err) {
-                console.error(err);
+                next(err);
             }
 
         }else {
@@ -109,7 +109,7 @@ class UserController {
                 }
             )
                 .then(function (){
-                    if (oldavatarImage !== req.file.filename) {
+                    if (oldavatarImage !== image) {
                         fs.unlinkSync('uploads/userImage/'+oldavatarImage);
                     }
                     res.redirect('/users')
@@ -147,7 +147,7 @@ class UserController {
         .then((user)=>{
             var lsUser = user.map(function (user) {
                 var date = user.birthday
-                var date = date.slice(8, 10) + '/' + date.slice(5, 7) + '/' + date.slice(0, 4)
+                var birthday = date.slice(8, 10) + '/' + date.slice(5, 7) + '/' + date.slice(0, 4)
                 return {
                     _id: user._id,
                     employeeCode: user.employeeCode,
@@ -158,7 +158,7 @@ class UserController {
                     phoneNumber: user.phoneNumber,
                     email: user.email,
                     avatarImage: user.avatarImage,
-                    birthday: date,
+                    birthday: birthday,
                     gender: user.gender,
                     status: user.status
                 }
