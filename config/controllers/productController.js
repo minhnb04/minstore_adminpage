@@ -25,6 +25,7 @@ class ProductController {
                         status: product.status,
                     }
                 })
+                console.log(lsProduct)
                 var productsJSON = JSON.stringify(lsProduct)
                 res.render('products', { title: 'Products Management', lsProduct: lsProduct, productsJSON: productsJSON})
             })
@@ -145,7 +146,52 @@ class ProductController {
     }
 
     searchProduct(req, res, next) {
-        res.render('products', { title: 'Search Products' })
+        var keyword_search = req.query.keyword_search
+        var keyword_search_number;
+        if (isNaN(keyword_search) == false){
+            keyword_search_number = Number(keyword_search)
+        }
+        var query = Product.where({
+            $or:[
+                {productName:{$regex:keyword_search, $options:'i'}},
+                {brand:{$regex:keyword_search, $options:'i'}},
+                {classify:{$regex:keyword_search, $options:'i'}},
+                {color:{$regex:keyword_search, $options:'i'}},
+                {memory:{$eq:keyword_search_number}},
+                {price:{$eq:keyword_search_number}},
+                {quantity:{$eq:keyword_search_number}},
+            ]
+        })
+
+        Product.find(query)
+            .then((product)=>{
+                var lsProduct = product.map(function (product) {
+                    var date = product.lastUpdated
+                    date = date.slice(8, 10) + '/' + date.slice(5, 7) + '/' + date.slice(0, 4)
+
+                    return {
+                        _id: product._id,
+                        productName: product.productName,
+                        brand: product.brand,
+                        classify: product.classify,
+                        color: product.color,
+                        quantity: product.quantity,
+                        specifications: product.specifications,
+                        memory:product.memory,
+                        price:product.price,
+                        lastUpdated: date,
+                        productImages: product.productImages,
+                        status: product.status,
+                    }
+                })
+                console.log(lsProduct)
+                var productsJSON = JSON.stringify(lsProduct)
+                res.render('products', { title: 'Products Management', lsProduct: lsProduct, productsJSON: productsJSON})
+            })
+            .catch((error)=>{
+                next(error)
+            })
+
     }
 }
 
